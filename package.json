@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "dayjs": "^1.8.17",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.7.2"
+  }
+}
