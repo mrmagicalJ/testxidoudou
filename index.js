@@ -76,22 +76,20 @@ async function init (isCHeck) {
 }
 
 console.log('定时任务已启动，退出请按 ctrl+c')
-schedule.scheduleJob('0 1 12 * * *', () => {
+schedule.scheduleJob('40 0 12 * * *', () => {
   // const users = await getUsers
   // console.log(users)
   // console.log('it start' + dayjs(Date.now()).format('YYYY:MM:DD HH:mm:ss'))
   init()
 })
 
+schedule.scheduleJob('20 1 12 * * *', () => { init() })
+
 schedule.scheduleJob('0 2 12 * * *', () => { init() })
 
-schedule.scheduleJob('0 3 12 * * *', () => { init() })
+schedule.scheduleJob('34 2 12 * * *', () => { init() })
 
-schedule.scheduleJob('0 4 12 * * *', () => { init() })
-
-schedule.scheduleJob('34 4 12 * * *', () => { init() })
-
-schedule.scheduleJob('0 5 12 * * *', () => { init(true) })
+schedule.scheduleJob('0 3 12 * * *', () => { init(true) })
 
 // init()
 // init(true)

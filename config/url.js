@@ -2,7 +2,7 @@ const baseUrl = 'http://xdd.syzykm.cn/Home/'
 
 const loginUrl = baseUrl + 'Login/login_do.html'
 
-const confirmChooseUrl = baseUrl + 'Rush/rushconfirm/goods_id/2014.html'
+const confirmChooseUrl = baseUrl + 'Rush/rushconfirm/goods_id/3144.html'
 
 const payUrl = baseUrl + 'Rush/pay.html'
 

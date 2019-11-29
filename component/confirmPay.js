@@ -25,7 +25,6 @@ function confirmPay (cookie, order_id) {
   return new Promise((resolve, reject) => {
     request(options, (error, response, body) => {
       if (!error) {
-        console.log(body)
         resolve('secondPay success')
       } else {
         reject('secondPay fail')
