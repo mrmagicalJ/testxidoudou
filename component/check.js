@@ -1,4 +1,4 @@
-const { checkUrl } = require('../config/url')
+const { checkUrl, baseUrl } = require('../config/url')
 const request = require("request")
 const { baseHeader } = require('../config/user')
 const { setCookie } = require('../utils')
@@ -27,11 +27,14 @@ function check (cookie) {
         // 时间存在，并且是当天
         if (time && time.split(' ')[0] === dayjs(Date.now()).format('YYYY-MM-DD')) {
             if (description === '挂卖中') {
-                resolve(`success ${time}`)
+              resolve(`success ${time}`)
             } else if (description === '待付款') {
-                resolve('payFail')
+              resolve('payFail')
             } else {
-                resolve('saleFail')
+              const url = $('.ord-bot > .ord-item .ordi-b .guamai').first().attr('href')
+              options.url = baseUrl + url
+              request(options)
+              resolve('saleFail')
             }
         } else {
             resolve('orderFail')

@@ -25,7 +25,17 @@ function confirmChoose (cookie) {
         const buy_num = $('#buy_num').val()
         const goodsid = $('#goodsid').val()
         if (!addressid) {
-          reject(`没有地址: ${body}`)
+          const info = $('.gradient-text').first().text().trim()
+          if (info.includes('请重新登陆')) {
+            reject({
+              msg: 'reLogin',
+              name: 'confirmChoose'
+            })
+          } else if (info.includes('每天只能抢购一次')) {
+            reject('success')
+          } else {
+            reject(`没有地址: ${body}`)
+          }
         } else {
           resolve({
             addressid,
