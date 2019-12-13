@@ -1,10 +1,12 @@
-const baseUrl = 'http://xdd.syzykm.cn'
+const baseUrl = 'https://www.xidoudousc.com'
 
 const loginUrl = baseUrl + '/Home/Login/login_do.html'
 
 const confirmChooseUrl = baseUrl + '/Home/Rush/rushconfirm/goods_id/3144.html'
 
 const payUrl = baseUrl + '/Home/Rush/pay.html'
+
+const paysubUrl = baseUrl + '/Home/Rush/paysub.html'
 
 const confirmPayUrl = baseUrl + '/Home/Rush/pay_ajax.html'
 
@@ -19,5 +21,6 @@ module.exports = {
   payUrl,
   confirmPayUrl,
   createSaleUrl,
-  checkUrl
+  checkUrl,
+  paysubUrl
 }

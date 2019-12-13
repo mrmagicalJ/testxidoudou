@@ -8,12 +8,12 @@ function warn () {
     console.log(...msg.map(i => typeof i === 'string' ? i.yellow : i))
 }
 
-function err (...msg) {
+function errlog (...msg) {
     console.log(...msg.map(i => typeof i === 'string' ? i.red : i))
 }
 
 module.exports = {
     log,
     warn,
-    err
+    errlog
 }

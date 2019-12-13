@@ -25,7 +25,7 @@ function loginRequest(options, resolve, reject, tryTime, tryTotal) {
       const isLogin = $('.gradient-text').first().text().trim() === '登陆成功'
       let cookie
       if (isLogin) {
-        cookie = response.headers["set-cookie"].map(ck => ck.split(';')[0]).join('; ')
+        cookie = response.headers["set-cookie"]
         resolve(cookie)
       } else {
         if (tryTime < tryTotal) {

@@ -24,6 +24,7 @@ function check (cookie) {
         const $ = cheerio.load(body)
         const description = $('.ord-bot > .ord-item .ordi-t em').first().text().trim()
         const time = $('.ord-bot > .ord-item .ordi-d span').first().text().trim()
+        const isErr = $('title').text().includes('502')
         // 时间存在，并且是当天
         if (time && time.split(' ')[0] === dayjs(Date.now()).format('YYYY-MM-DD')) {
             if (description === '挂卖中') {
@@ -37,7 +38,11 @@ function check (cookie) {
               resolve('saleFail')
             }
         } else {
+          if (isErr) {
+            resolve('payFail')
+          } else {
             resolve('orderFail')
+          }
         }
       } else {
         reject("check fail！")

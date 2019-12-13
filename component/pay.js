@@ -24,7 +24,13 @@ function pay (cookie, data) {
     request(options, (error, response, body) => {
       if (!error) {
         const $ = cheerio.load(body)
-        resolve( $('#order_id').val() )
+        const cookie = response.headers["set-cookie"]
+        console.log(body)
+        console.log($('#order_id').val())
+        resolve({
+          data: $('#order_id').val(),
+          cookie
+        })
       } else {
         reject(`pay失败: ${error}`)
       }

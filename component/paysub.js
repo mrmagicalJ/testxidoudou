@@ -1,11 +1,11 @@
-const { confirmPayUrl } = require('../config/url')
+const { paysubUrl } = require('../config/url')
 const { baseHeader } = require('../config/user')
 const { setCookie } = require('../utils')
 const { secondPsw } = require('../config/user')
 const request = require("request")
 
 const options = {
-  url: confirmPayUrl,
+  url: paysubUrl,
   method: "POST",
   headers: Object.assign({}, baseHeader)
 }
@@ -15,25 +15,16 @@ const options = {
  * @param {String|Number} order_id orderId
  * @returns promise(成功信息, 错误信息)
  */
-function confirmPay (cookie, order_id) {
+function paysub (cookie, order_id) {
   setCookie(options, cookie)
   options.form = {
     paypwd: secondPsw,
     order_id
   }
 
-  return new Promise((resolve, reject) => {
-    request(options, (error, response, body) => {
-      if (!error) {
-        console.log('confirmpay', body)
-        resolve('secondPay success')
-      } else {
-        reject('secondPay fail')
-      }
-    })
-  })
+  request(options, (error, response, body) => {})
 }
 
 module.exports = {
-  confirmPay
+  paysub
 }

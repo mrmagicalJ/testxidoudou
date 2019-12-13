@@ -37,10 +37,14 @@ function confirmChoose (cookie) {
             reject(`没有地址: ${body}`)
           }
         } else {
+          const cookie = response.headers["set-cookie"]
           resolve({
-            addressid,
-            buy_num,
-            goodsid
+            data: {
+              addressid,
+              buy_num,
+              goodsid
+            },
+            cookie
           })
         }
       } else {
