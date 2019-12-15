@@ -2,7 +2,9 @@ const baseUrl = 'https://www.xidoudousc.com'
 
 const loginUrl = baseUrl + '/Home/Login/login_do.html'
 
-const confirmChooseUrl = baseUrl + '/Home/Rush/rushconfirm/goods_id/3144.html'
+// const confirmChooseUrl = baseUrl + '/Home/Rush/rushconfirm/goods_id/3144.html'
+
+const confirmChooseUrl = baseUrl + '/Home/Rush/rushconfirm/goods_id/3112.html'
 
 const payUrl = baseUrl + '/Home/Rush/pay.html'
 

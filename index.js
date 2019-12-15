@@ -15,6 +15,7 @@ const { log, warn, errlog } = require('./utils/console')
 
 async function repeatCheck ({ cookie, orderId, tryTime, tryTotal }) {
   const res = await check(cookie)
+  console.log(`orderid---------: ${orderId}`)
   // if sale failed
   if (res === 'saleFail' && tryTime !== tryTotal) {
     await sale(cookie, orderId)
@@ -22,7 +23,8 @@ async function repeatCheck ({ cookie, orderId, tryTime, tryTotal }) {
     return repeatCheck({ cookie, orderId, tryTime: tryTime + 1, tryTotal })
   }
   // if pay failed
-  if (res === 'payFail' && tryTime !== tryTotal) {
+  if (res.includes('payFail') && tryTime !== tryTotal) {
+    orderId = res.split('-')[1]
     await confirmPay(cookie, orderId)
     await delay(1000)
     await sale(cookie, orderId)
@@ -43,7 +45,7 @@ async function init (isCHeck) {
     users.forEach(async mobile => {
       try {
         let tryTime = 1
-        const tryTotal = 10
+        const tryTotal = 6
         const loginData = {
           mobile,
           password: psw
@@ -66,10 +68,10 @@ async function init (isCHeck) {
           temp.cookie && ck.setCookie(temp.cookie)
 
           await delay(1000)
-          await confirmPay(ck.getCookie(), orderId)
-          await delay(1000)
-          await sale(ck.getCookie(), orderId)
-          await delay(1000)
+          // await confirmPay(ck.getCookie(), orderId)
+          // await delay(1000)
+          // await sale(ck.getCookie(), orderId)
+          // await delay(1000)
           res = await repeatCheck({ cookie: ck.getCookie(), orderId, tryTime, tryTotal })
         } else {
           res = await check(ck.getCookie())
@@ -93,34 +95,6 @@ async function init (isCHeck) {
   }
 }
 
-// async function pipeline (loginData, orderId, info = 'confirmPay') {
-//   let payData, orderId, res
-//   const cookie = await login(loginData)
-//   await delay(1000)
-
-//   if (orderId && info === 'confirmPay') {
-//     return step(confirmPay, cookie, orderId)
-//   } else if (orderId && info === 'sale') {
-//     return step(sale, cookie, orderId)
-//   } else {
-//     return step(confirmChoose, cookie)
-//     payData = await confirmChoose(cookie)
-//     await delay(1000)
-//     orderId = await pay(cookie, payData)
-//     await delay(1000)
-//     await confirmPay(cookie, orderId)
-//     await delay(1000)
-//     await sale(cookie, orderId)
-//   }
-// }
-
-// async function step (fn, data, failData) {
-//   const res = await fn(...data)
-//   if (res === 'reLogin') {
-//     return pipeline(failData)
-//   }
-// }
-
 
 
 log('定时任务已启动，退出请按 ctrl+c')
@@ -140,19 +114,10 @@ schedule.scheduleJob('20 5 12 * * *', () => { init(true) });
 
 
 
-schedule.scheduleJob('40 0 16 * * *', () => { init() })
+schedule.scheduleJob('40 0 17 * * *', () => { init() })
 
-schedule.scheduleJob('20 1 16 * * *', () => { init() })
+schedule.scheduleJob('40 1 17 * * *', () => { init() })
+// schedule.scheduleJob('10 40 20 * * *', () => { init(true) })
 
-schedule.scheduleJob('0 2 16 * * *', () => { init() })
-
-schedule.scheduleJob('0 31 20 * * *', () => { init() })
-schedule.scheduleJob('0 33 20 * * *', () => { init() })
-schedule.scheduleJob('0 35 20 * * *', () => { init() })
-schedule.scheduleJob('0 37 20 * * *', () => { init() })
-schedule.scheduleJob('0 39 20 * * *', () => { init() })
-
-schedule.scheduleJob('10 40 20 * * *', () => { init(true) })
-
-init()
-// init(true)
+// init()
+init(true)

@@ -7,7 +7,7 @@ const cheerio = require('cheerio')
 const options = {
   url: payUrl,
   method: "POST",
-  headers: Object.assign({}, baseHeader)
+  headers: Object.assign({ Referer: 'https://www.xidoudousc.com/Home/Rush/pay.html' }, baseHeader)
 }
 
 /**
