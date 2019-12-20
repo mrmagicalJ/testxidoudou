@@ -15,20 +15,19 @@ const { log, warn, errlog } = require('./utils/console')
 
 async function repeatCheck ({ cookie, orderId, tryTime, tryTotal }) {
   const res = await check(cookie)
-  console.log(`orderid---------: ${orderId}`)
   // if sale failed
   if (res === 'saleFail' && tryTime !== tryTotal) {
     await sale(cookie, orderId)
-    await delay(1000)
+    await delay(1500)
     return repeatCheck({ cookie, orderId, tryTime: tryTime + 1, tryTotal })
   }
   // if pay failed
   if (res.includes('payFail') && tryTime !== tryTotal) {
     orderId = res.split('-')[1]
     await confirmPay(cookie, orderId)
-    await delay(1000)
+    await delay(1500)
     await sale(cookie, orderId)
-    await delay(1000)
+    await delay(1500)
     return repeatCheck({ cookie, orderId, tryTime: tryTime + 1, tryTotal })
   }
 
@@ -45,7 +44,7 @@ async function init (isCHeck) {
     users.forEach(async mobile => {
       try {
         let tryTime = 1
-        const tryTotal = 6
+        const tryTotal = 10
         const loginData = {
           mobile,
           password: psw
@@ -55,19 +54,20 @@ async function init (isCHeck) {
         const ck = new Cookie()
         cookie = await login(loginData)
         ck.setCookie(cookie)
+        await delay(2000);
 
         if (!isCHeck) {
           temp = await confirmChoose(ck.getCookie())
           payData = temp.data
           temp.cookie && ck.setCookie(temp.cookie)
 
-          await delay(1000);
+          await delay(1500);
 
           temp = await pay(ck.getCookie(), payData)
           orderId = temp.data
           temp.cookie && ck.setCookie(temp.cookie)
 
-          await delay(1000)
+          await delay(5000)
           // await confirmPay(ck.getCookie(), orderId)
           // await delay(1000)
           // await sale(ck.getCookie(), orderId)
@@ -77,10 +77,10 @@ async function init (isCHeck) {
           res = await check(ck.getCookie())
         }
         
-        log(`总数量：${total}，已完成数量：${++complete}  orderId：${orderId}`)
+        log(`总数量：${total}，已完成数量：${++complete}`)
         if (res === 'saleFail') {
           warn(`${mobile} ${res}`)
-        } else if (['payFail', 'orderFail'].includes(res)) {
+        } else if (res.includes('payFail') || res.includes('orderFail')) {
           errlog(`${mobile} ${res}`)
         } else {
           log(`${mobile} ${res}`)
@@ -104,11 +104,13 @@ schedule.scheduleJob('20 1 12 * * *', () => { init() })
 
 schedule.scheduleJob('0 2 12 * * *', () => { init() })
 
-schedule.scheduleJob('34 3 12 * * *', () => { init() })
+schedule.scheduleJob('50 2 12 * * *', () => { init(true) })
 
-schedule.scheduleJob('20 4 12 * * *', () => { init() })
+schedule.scheduleJob('0 3 12 * * *', () => { init() })
 
-schedule.scheduleJob('20 5 12 * * *', () => { init(true) });
+schedule.scheduleJob('0 4 12 * * *', () => { init() })
+
+schedule.scheduleJob('20 5 12 * * *', () => { init(true) })
 
 
 

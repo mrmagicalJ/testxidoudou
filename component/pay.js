@@ -25,8 +25,6 @@ function pay (cookie, data) {
       if (!error) {
         const $ = cheerio.load(body)
         const cookie = response.headers["set-cookie"]
-        console.log(body)
-        console.log($('#order_id').val())
         resolve({
           data: $('#order_id').val(),
           cookie

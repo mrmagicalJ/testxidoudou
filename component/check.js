@@ -43,6 +43,7 @@ function check (cookie) {
           if (isErr) {
             resolve('payFail')
           } else {
+            console.log(body)
             resolve('orderFail')
           }
         }
