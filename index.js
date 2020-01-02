@@ -68,10 +68,6 @@ async function init (isCHeck) {
           temp.cookie && ck.setCookie(temp.cookie)
 
           await delay(5000)
-          // await confirmPay(ck.getCookie(), orderId)
-          // await delay(1000)
-          // await sale(ck.getCookie(), orderId)
-          // await delay(1000)
           res = await repeatCheck({ cookie: ck.getCookie(), orderId, tryTime, tryTotal })
         } else {
           res = await check(ck.getCookie())
@@ -95,31 +91,35 @@ async function init (isCHeck) {
   }
 }
 
-
-
 log('定时任务已启动，退出请按 ctrl+c')
-schedule.scheduleJob('40 0 12 * * *', () => { init() })
+schedule.scheduleJob('30 0 12 * * *', () => { init() })
+
+schedule.scheduleJob('0 1 12 * * *', () => { init() })
 
 schedule.scheduleJob('20 1 12 * * *', () => { init() })
 
-schedule.scheduleJob('0 2 12 * * *', () => { init() })
+schedule.scheduleJob('50 1 12 * * *', () => { init() })
 
-schedule.scheduleJob('50 2 12 * * *', () => { init(true) })
+schedule.scheduleJob('20 2 12 * * *', () => { init() })
 
-schedule.scheduleJob('0 3 12 * * *', () => { init() })
+schedule.scheduleJob('40 2 12 * * *', () => { init() })
 
-schedule.scheduleJob('0 4 12 * * *', () => { init() })
-
-schedule.scheduleJob('20 5 12 * * *', () => { init(true) })
+schedule.scheduleJob('5 3 12 * * *', () => { init(true) })
 
 
+schedule.scheduleJob('30 0 16 * * *', () => { init() })
 
+schedule.scheduleJob('0 1 16 * * *', () => { init() })
 
+schedule.scheduleJob('20 1 16 * * *', () => { init() })
 
-schedule.scheduleJob('40 0 17 * * *', () => { init() })
+schedule.scheduleJob('50 1 16 * * *', () => { init() })
 
-schedule.scheduleJob('40 1 17 * * *', () => { init() })
-// schedule.scheduleJob('10 40 20 * * *', () => { init(true) })
+schedule.scheduleJob('20 2 16 * * *', () => { init() })
+
+schedule.scheduleJob('40 2 16 * * *', () => { init() })
+
+schedule.scheduleJob('5 3 16 * * *', () => { init(true) })
 
 // init()
 init(true)

@@ -8,7 +8,7 @@ const confirmChooseUrl = baseUrl + '/Home/Rush/rushconfirm/goods_id/3461.html'
 
 // const confirmChooseUrl = baseUrl + '/Home/Rush/rushconfirm/goods_id/3112.html'
 
-// const confirmChooseUrl = baseUrl + '/Home/Rush/rushconfirm/goods_id/2012.html'
+// const confirmChooseUrl = baseUrl + '/Home/Rush/rushconfirm/goods_id/3556.html'
 
 const payUrl = baseUrl + '/Home/Rush/pay.html'
 

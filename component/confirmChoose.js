@@ -21,6 +21,7 @@ function confirmChoose (cookie) {
     request(options, (error, response, body) => {
       if (!error) {
         const $ = cheerio.load(body)
+        // const youhui = $('#youhui').val()
         const addressid = $('#addressid').val()
         const buy_num = $('#buy_num').val()
         const goodsid = $('#goodsid').val()
@@ -40,6 +41,7 @@ function confirmChoose (cookie) {
           const cookie = response.headers["set-cookie"]
           resolve({
             data: {
+              youhui: 20,
               addressid,
               buy_num,
               goodsid
