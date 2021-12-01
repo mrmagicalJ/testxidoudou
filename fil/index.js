@@ -2,7 +2,7 @@ const md5 = require('crypto-js/md5');
 const ProgressBar = require('progress');
 const { fetchLogin, fetchWeekList, fetchDailyTask, fetchTaskTopic, fetchSubmitAnswer, fetchZeroLu } = require('./api');
 
-const account = [
+const accounts = [
 	{ account: '13700015132', loginPwd: 'ypw153153' },
 	{ account: 'a0019912336161@163.com', loginPwd: 'ypw153153' },
 	{ account: 'a1519912336161@163.com', loginPwd: 'ypw153153' },
@@ -51,7 +51,6 @@ const task = async (account, loginPwd) => {
 			await dealRes(fetchSubmitAnswer({ topicId, topicType, submitOption: correctOption, token }));
 			bar.tick(1);
 		}
-		console.log(`${account} 完成\n`);
 	} catch (error) {
 		console.error(error);
 	}
@@ -59,7 +58,7 @@ const task = async (account, loginPwd) => {
 }
 
 const init = async () => {
-	for (const { account, loginPwd } of account) {
+	for (const { account, loginPwd } of accounts) {
 		await task(account, loginPwd)
 	}
 };
