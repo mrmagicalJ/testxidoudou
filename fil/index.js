@@ -26,7 +26,10 @@ const login = async ({ account, loginPwd }) => {
 			prefix: 86,
 			token: '',
 		});
-		if (code !== 200) throw new Error(msg);
+		if (code !== 200) {
+			console.log(account)
+			throw new Error(msg);
+		}
 		return result.token;
 	} catch (err) {
 		console.error(err);
