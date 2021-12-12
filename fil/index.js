@@ -1,6 +1,7 @@
 const md5 = require('crypto-js/md5');
 const ProgressBar = require('progress');
 const { fetchLogin, fetchWeekList, fetchDailyTask, fetchTaskTopic, fetchSubmitAnswer, fetchZeroLu } = require('./api');
+const { limitRequest } = require('./limitRequest')
 
 const accounts = [
 	{ account: '13700015132', loginPwd: 'ypw153153' },
@@ -17,23 +18,19 @@ const dealRes = async (fn) => {
 };
 
 const login = async ({ account, loginPwd }) => {
-	try {
-		const {
-			data: { code, result, msg },
-		} = await fetchLogin({
-			account,
-			loginPwd: md5(loginPwd).toString(),
-			prefix: 86,
-			token: '',
-		});
-		if (code !== 200) {
-			console.log(account)
-			throw new Error(msg);
-		}
-		return result.token;
-	} catch (err) {
-		console.error(err);
+	const {
+		data: { code, result, msg },
+	} = await fetchLogin({
+		account,
+		loginPwd: md5(loginPwd).toString(),
+		prefix: 86,
+		token: '',
+	});
+	if (code !== 200) {
+		console.log(account)
+		throw new Error(msg);
 	}
+	return result.token;
 };
 
 const task = async (account, loginPwd) => {
@@ -60,10 +57,15 @@ const task = async (account, loginPwd) => {
 	return;
 }
 
+const generateAsyncList = (list) => list.map(({ account, loginPwd }) => {
+	() => task(account, loginPwd)
+})
+
 const init = async () => {
-	for (const { account, loginPwd } of accounts) {
-		await task(account, loginPwd)
-	}
+	limitRequest(generateAsyncList(accounts), 4);
+	// for (const { account, loginPwd } of accounts) {
+	// 	await task(account, loginPwd)
+	// }
 };
 
 init();
