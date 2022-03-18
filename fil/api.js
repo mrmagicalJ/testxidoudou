@@ -17,14 +17,14 @@ const headers = {
  * @param {String} data.loginPwd 密码
  */
 const fetchLogin = data => axios({
-  url: 'http://fil.zooofx.com/app/customer/open/login',
+  url: 'http://fil.blockwins.com/app/customer/open/login',
   method: 'post',
   headers,
   data: qs.stringify({ ...data, ...baseParams })
 })
 
 const fetchWeekList = params => axios({
-  url: 'http://fil.zooofx.com/app/signTask/weekList',
+  url: 'http://fil.blockwins.com/app/signTask/weekList',
   method: 'get',
   headers,
   params: {
@@ -34,7 +34,7 @@ const fetchWeekList = params => axios({
 })
 
 const fetchDailyTask = params => axios({
-  url: 'http://fil.zooofx.com/app/signTask/dailyTask',
+  url: 'http://fil.blockwins.com/app/signTask/dailyTask',
   method: 'get',
   headers,
   params: {
@@ -44,7 +44,7 @@ const fetchDailyTask = params => axios({
 })
 
 const fetchTaskTopic = params => axios({
-  url: 'http://fil.zooofx.com/app/signTask/taskTopic',
+  url: 'http://fil.blockwins.com/app/signTask/taskTopic',
   method: 'get',
   headers,
   params: {
@@ -58,14 +58,14 @@ const fetchTaskTopic = params => axios({
  * @param {Object} data
  */
 const fetchSubmitAnswer = data => axios({
-  url: 'http://fil.zooofx.com/app/signTask/submitAnswer',
+  url: 'http://fil.blockwins.com/app/signTask/submitAnswer',
   method: 'post',
   headers,
   data: qs.stringify({ ...data, ...baseParams })
 })
 
 const fetchZeroLu = params => axios({
-  url: 'http://fil.zooofx.com/app/zeroLu/getConvertTipInfo',
+  url: 'http://fil.blockwins.com/app/zeroLu/getConvertTipInfo',
   method: 'get',
   headers,
   params: {
