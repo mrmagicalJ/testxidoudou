@@ -1922,27 +1922,33 @@ const login = async ({ account, loginPwd }) => {
 	return result.token;
 };
 
-const task = async (account, loginPwd) => {
+const bar = new ProgressBar(` :current/:total [:bar] :percent`, {
+	complete: '=',
+	incomplete: ' ',
+	width: 20,
+	total: accounts.length,
+});
+
+const task = async (account, loginPwd, retryTime = 3) => {
 	const total = 12;
 	try {
 		const token = await login({ account, loginPwd });
 		await dealRes(fetchZeroLu({ token }));
 		await dealRes(fetchWeekList({ token }));
 		await dealRes(fetchDailyTask({ token }));
-		const bar = new ProgressBar(`  ${account} [:bar] :percent`, {
-			complete: '=',
-			incomplete: ' ',
-			width: 20,
-			total,
-		});
+		
 		for (let index = 0; index < total; index++) {
 			const { correctOption, topicId, topicType } = await dealRes(fetchTaskTopic({ token }));
 			await dealRes(fetchSubmitAnswer({ topicId, topicType, submitOption: correctOption, token }));
-			bar.tick(1);
 		}
+		bar.tick(1);
 	} catch (error) {
-		console.log(`\n${account}`)
-		console.error(error);
+		if (retryTime > 0) {
+			task(account, loginPwd, retryTime - 1)
+		} else {
+			console.log(`\n${account}`)
+			console.error(error);
+		}
 	}
 	return;
 }
@@ -1952,7 +1958,7 @@ const generateAsyncList = (list) => list.map(({ account, loginPwd }) =>
 )
 
 const init = async () => {
-	limitRequest(generateAsyncList(accounts), 6);
+	limitRequest(generateAsyncList(accounts), 8);
 	// for (const { account, loginPwd } of accounts) {
 	// 	await task(account, loginPwd)
 	// }
