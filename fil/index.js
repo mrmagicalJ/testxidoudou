@@ -1929,7 +1929,7 @@ const bar = new ProgressBar(` :current/:total [:bar] :percent`, {
 	total: accounts.length,
 });
 
-const task = async (account, loginPwd, retryTime = 3) => {
+const task = async (account, loginPwd, retryTime = 5) => {
 	const total = 12;
 	try {
 		const token = await login({ account, loginPwd });
@@ -1943,11 +1943,12 @@ const task = async (account, loginPwd, retryTime = 3) => {
 		}
 		bar.tick(1);
 	} catch (error) {
-		if (retryTime > 0) {
+		if (retryTime > 0 && error !== '该日期签到任务已完成') {
 			task(account, loginPwd, retryTime - 1)
+		} else if (error === '该日期签到任务已完成') {
+			bar.tick(1);
 		} else {
-			console.log(`\n${account}`)
-			console.error(error);
+			console.log(account + ' ------ ' + error)
 		}
 	}
 	return;
